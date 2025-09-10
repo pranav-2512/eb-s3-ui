@@ -9,7 +9,7 @@ const client = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_KEY as string,
     },
     
-    region: process.env.AWS_REGION as string,
+    region: process.env.MY_AWS_REGION as string,
 })
 
 
