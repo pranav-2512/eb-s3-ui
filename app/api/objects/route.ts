@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3'; 
-import { fileURLToPath } from "url";
+//import { fileURLToPath } from "url";
 import { Folder } from "lucide-react";
 
 // const accessKeyId = process.env.AWS_ACCESS_KEY;
