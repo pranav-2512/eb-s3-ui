@@ -31,19 +31,20 @@ function HomeContent() {
   const [prefix, setPrefix] = useState<string>("");
   const { permissions, role } = useRole();
 
-  // Don't render if no role or permissions
-  if (!role || !permissions) {
-    return null;
-  }
-
   useEffect(() => {
+    if (!role || !permissions) return;
     const url = prefix
       ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
       : `${apiUrl}/api/objects`;
     fetch(url)
       .then((res) => res.json())
       .then(setData);
-  }, [prefix]);
+  }, [prefix, role, permissions]);
+
+  // Don't render if no role or permissions
+  if (!role || !permissions) {
+    return null;
+  }
 
   const breadcrumbs = getBreadcrumbs(prefix);
 

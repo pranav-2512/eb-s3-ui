@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     
     // Convert the stream to buffer
     const chunks = [];
-    for await (const chunk of response.Body as any) {
+    for await (const chunk of response.Body as NodeJS.ReadableStream) {
       chunks.push(chunk);
     }
     const buffer = Buffer.concat(chunks);
