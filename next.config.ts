@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Use default Next.js settings so Netlify can handle SSR/API via plugin
 };
 
 export default nextConfig;
