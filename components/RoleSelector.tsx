@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { User, Shield, Eye } from 'lucide-react';
+import { User, Eye } from 'lucide-react';
 
 interface RoleSelectorProps {
   onRoleSelect: (role: 'guest' | 'user') => void;

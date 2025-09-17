@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { SignedOut, SignedIn } from '@clerk/nextjs';
+// import { SignedOut, SignedIn } from '@clerk/nextjs';
 import { useRole } from '@/contexts/RoleContext';
 import WelcomeScreen from './WelcomeScreen';
 

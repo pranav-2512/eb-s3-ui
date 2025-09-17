@@ -378,7 +378,7 @@ function HomeContent() {
           <div className="text-center">
             <div className="backdrop-blur-md bg-blue-50/80 dark:bg-blue-900/20 rounded-xl shadow-lg border border-blue-200/50 dark:border-blue-700/50 p-6">
               <p className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
-                You're viewing as Guest! 
+                You&apos;re viewing as Guest! 
               </p>
               <p className="text-sm text-blue-600 dark:text-blue-300 mb-2">
                 For full access, request admin privileges or sign in as a user 💙

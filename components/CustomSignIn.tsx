@@ -6,7 +6,7 @@ import RoleSelector from './RoleSelector';
 import { useRole } from '@/contexts/RoleContext';
 
 export default function CustomSignIn() {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const { role, setRole } = useRole();
   const [showRoleSelector, setShowRoleSelector] = useState(false);
 
