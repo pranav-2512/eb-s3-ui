@@ -34,24 +34,27 @@ export default function CustomSignInForm() {
     }
   };
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'pranav2512';
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'pranav@210522';
-    
-    console.log('Admin login attempt:', adminCredentials);
-    console.log('Expected credentials:', { adminUsername, adminPassword });
-    
-    if (adminCredentials.username === adminUsername && adminCredentials.password === adminPassword) {
-      console.log('Admin credentials valid, setting role to admin');
-      setRole('admin');
-      setError('');
-      // Force a page refresh to ensure the role change takes effect
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    } else {
-      setError('Invalid admin credentials');
+    try {
+      const res = await fetch('/api/validate-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adminCredentials),
+      });
+      const data = await res.json();
+      if (res.ok && data.valid) {
+        setRole('admin');
+        setError('');
+        // Force a page refresh to ensure the role change takes effect
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      } else {
+        setError(data.error || 'Invalid admin credentials');
+      }
+    } catch (err) {
+      setError('Unable to validate admin credentials');
     }
   };
 

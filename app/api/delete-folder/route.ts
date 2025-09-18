@@ -3,10 +3,10 @@ import { S3Client, ListObjectsV2Command, DeleteObjectCommand } from "@aws-sdk/cl
 
 const client = new S3Client({
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY as string,
-    secretAccessKey: process.env.AWS_SECRET_KEY as string,
+    accessKeyId: process.env.EB_AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.EB_AWS_SECRET_ACCESS_KEY as string,
   },
-  region: process.env.MY_AWS_REGION as string,
+  region: (process.env.EB_AWS_REGION || 'us-east-1') as string,
 });
 
 export async function DELETE(request: NextRequest) {
@@ -19,7 +19,7 @@ export async function DELETE(request: NextRequest) {
   try {
     // List all objects with the folder prefix
     const listCommand = new ListObjectsV2Command({
-      Bucket: process.env.S3_BUCKET_NAME as string,
+      Bucket: (process.env.EB_S3_BUCKET || process.env.AWS_S3_BUCKET || process.env.S3_BUCKET_NAME) as string,
       Prefix: key,
     });
 
@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest) {
     const deletePromises = objectsToDelete.map(obj => {
       if (obj.Key) {
         const deleteCommand = new DeleteObjectCommand({
-          Bucket: process.env.S3_BUCKET_NAME as string,
+          Bucket: (process.env.EB_S3_BUCKET || process.env.AWS_S3_BUCKET || process.env.S3_BUCKET_NAME) as string,
           Key: obj.Key,
         });
         return client.send(deleteCommand);

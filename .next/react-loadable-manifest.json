@@ -1,0 +1,26 @@
+{
+  "node_modules\\.pnpm\\@clerk+nextjs@6.31.10_next@15.5.3_react-dom@19.1.0_react@19.1.0__react@19.1.0__react-dom@19.1_brmmwzmww6wa4zxi2a7ubb62ey\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
+    "id": 8085,
+    "files": [
+      "static/chunks/85.f77be66534958d6c.js"
+    ]
+  },
+  "node_modules\\.pnpm\\@clerk+nextjs@6.31.10_next@15.5.3_react-dom@19.1.0_react@19.1.0__react@19.1.0__react-dom@19.1_brmmwzmww6wa4zxi2a7ubb62ey\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\keyless-cookie-sync.js -> ../keyless-actions.js": {
+    "id": 7776,
+    "files": [
+      "static/chunks/776.6367b6f185ef9c54.js"
+    ]
+  },
+  "node_modules\\.pnpm\\next@15.5.3_react-dom@19.1.0_react@19.1.0__react@19.1.0\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": 8805,
+    "files": [
+      "static/chunks/805.88ead6be0bbef460.js"
+    ]
+  },
+  "node_modules\\.pnpm\\next@15.5.3_react-dom@19.1.0_react@19.1.0__react@19.1.0\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": 6208,
+    "files": [
+      "static/chunks/208.5649f0492355af98.js"
+    ]
+  }
+}

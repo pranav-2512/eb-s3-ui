@@ -4,9 +4,9 @@ export async function POST(request: NextRequest) {
   try {
     const { username, password } = await request.json();
 
-    // Get admin credentials from environment variables
-    const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    // Get admin credentials from server environment variables
+    const adminUsername = process.env.EB_ADMIN_USERNAME;
+    const adminPassword = process.env.EB_ADMIN_PASSWORD;
     const adminId = process.env.ADMIN_ID || 'admin/admin001';
 
     // Check if admin credentials are configured

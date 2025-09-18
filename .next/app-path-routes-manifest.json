@@ -1,0 +1,16 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/create-folder/route": "/api/create-folder",
+  "/api/delete-folder/route": "/api/delete-folder",
+  "/api/download/route": "/api/download",
+  "/api/delete/route": "/api/delete",
+  "/api/objects/route": "/api/objects",
+  "/api/upload/route": "/api/upload",
+  "/api/validate-admin/route": "/api/validate-admin",
+  "/api/validate-user/route": "/api/validate-user",
+  "/api/view/route": "/api/view",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/sign-in/[[...sign-in]]/page": "/sign-in/[[...sign-in]]",
+  "/sign-up/[[...sign-up]]/page": "/sign-up/[[...sign-up]]"
+}

@@ -7,7 +7,7 @@ import { useRole } from "@/contexts/RoleContext";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import { createFolder as svcCreateFolder, deleteFolder as svcDeleteFolder, deleteObject as svcDeleteObject, getDownloadUrl, getUploadUrl, listObjects, type ListResponse } from "@/lib/services/storage";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+// Use relative API routes; no need for a public origin
 
 type FileType = {
   Key: string;
@@ -248,7 +248,7 @@ function HomeContent() {
                       {permissions.canView && (
                         <button
                           onClick={() => {
-                            const viewUrl = `${apiUrl}/api/view?key=${encodeURIComponent(file.FullKey)}`;
+                            const viewUrl = `/api/view?key=${encodeURIComponent(file.FullKey)}`;
                             window.open(viewUrl, '_blank');
                           }}
                           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 dark:text-white 

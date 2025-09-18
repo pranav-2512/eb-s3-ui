@@ -5,11 +5,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const client = new S3Client({
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY as string,
-        secretAccessKey: process.env.AWS_SECRET_KEY as string,
+        accessKeyId: process.env.EB_AWS_ACCESS_KEY_ID as string,
+        secretAccessKey: process.env.EB_AWS_SECRET_ACCESS_KEY as string,
     },
     
-    region: process.env.MY_AWS_REGION as string,
+    region: (process.env.EB_AWS_REGION || 'us-east-1') as string,
 })
 
 
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     if(!key) throw new Error('Key is Required buddy');
 
     const command = new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET_NAME as string,
+        Bucket: (process.env.EB_S3_BUCKET || process.env.AWS_S3_BUCKET || process.env.S3_BUCKET_NAME) as string,
         Key: key,
     });
 

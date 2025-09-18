@@ -4,9 +4,9 @@ export async function POST(request: NextRequest) {
   try {
     const { username, password } = await request.json();
 
-    // Get user credentials from environment variables
-    const userUsername = process.env.NEXT_PUBLIC_USER_USERNAME;
-    const userPassword = process.env.NEXT_PUBLIC_USER_PASSWORD;
+    // Get user credentials from server environment variables
+    const userUsername = process.env.EB_USER_USERNAME;
+    const userPassword = process.env.EB_USER_PASSWORD;
     const userId = process.env.USER_ID || 'user/user001';
 
     // Check if user credentials are configured
