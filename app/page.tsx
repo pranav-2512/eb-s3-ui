@@ -5,6 +5,7 @@ import { Folder, File, ArrowLeft, ChevronRight, Upload, Download, Trash2, Users 
 import { useEffect, useState } from "react";
 import { useRole } from "@/contexts/RoleContext";
 import WelcomeScreen from "@/components/WelcomeScreen";
+import { createFolder as svcCreateFolder, deleteFolder as svcDeleteFolder, deleteObject as svcDeleteObject, getDownloadUrl, getUploadUrl, listObjects, type ListResponse } from "@/lib/services/storage";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -33,12 +34,7 @@ function HomeContent() {
 
   useEffect(() => {
     if (!role || !permissions) return;
-    const url = prefix
-      ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
-      : `${apiUrl}/api/objects`;
-    fetch(url)
-      .then((res) => res.json())
-      .then(setData);
+    listObjects(prefix).then(setData as unknown as (v: ListResponse) => void).catch(() => {});
   }, [prefix, role, permissions]);
 
   // Don't render if no role or permissions
@@ -60,8 +56,7 @@ function HomeContent() {
   return (
     <div className="min-h-screen w-full transition-colors bg-white text-black dark:bg-black dark:text-white">
       <div className="max-w-7xl mx-auto px-4 py-8 min-h-[calc(100vh-200px)]">
-        <div className="rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 bg-white dark:bg-black text-black dark:text-white">
-          <Card className="bg-transparent border-0 shadow-none">
+          <Card>
             <CardContent className="p-8">
               {/* Header with Path Navigation, Back, and Action Buttons */}
               <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
@@ -111,23 +106,9 @@ function HomeContent() {
                       if (folderName) {
                           try {
                             const folderKey = prefix + folderName + "/";
-                            const response = await fetch(
-                              `${apiUrl}/api/create-folder?key=${encodeURIComponent(folderKey)}`,
-                              { method: 'POST' }
-                            );
-                            
-                            if (response.ok) {
-                              const listResponse = await fetch(
-                                prefix
-                                  ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
-                                  : `${apiUrl}/api/objects`
-                              );
-                              const newData = await listResponse.json();
-                              setData(newData);
-                            } else {
-                              const error = await response.json();
-                              alert(`Failed to create folder: ${error.error || 'Unknown error'}`);
-                            }
+                            await svcCreateFolder(folderKey);
+                            const newData = await listObjects(prefix);
+                            setData(newData);
                           } catch (error) {
                             console.error("Error creating folder:", error);
                             alert("Failed to create folder. Please try again.");
@@ -176,10 +157,7 @@ function HomeContent() {
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const response = await fetch(
-                          `${apiUrl}/api/upload?key=${encodeURIComponent(prefix + file.name)}`
-                        );
-                        const { url } = await response.json();
+                        const url = await getUploadUrl(prefix + file.name);
                         await fetch(url, {
                           method: "PUT",
                           body: file,
@@ -187,12 +165,7 @@ function HomeContent() {
                             "Content-Type": file.type,
                           },
                         });
-                        const listResponse = await fetch(
-                          prefix
-                            ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
-                            : `${apiUrl}/api/objects`
-                        );
-                        const newData = await listResponse.json();
+                        const newData = await listObjects(prefix);
                         setData(newData);
                       } catch (error) {
                         console.error("Error uploading file:", error);
@@ -234,23 +207,9 @@ function HomeContent() {
                           e.stopPropagation();
                           if (confirm(`Are you sure you want to delete the folder "${folder.replace(prefix, "").replace("/", "")}"? This will delete all contents inside.`)) {
                             try {
-                              const response = await fetch(
-                                `${apiUrl}/api/delete-folder?key=${encodeURIComponent(folder)}`,
-                                { method: 'DELETE' }
-                              );
-                              
-                              if (response.ok) {
-                                const listResponse = await fetch(
-                                  prefix
-                                    ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
-                                    : `${apiUrl}/api/objects`
-                                );
-                                const newData = await listResponse.json();
+                                await svcDeleteFolder(folder);
+                                const newData = await listObjects(prefix);
                                 setData(newData);
-                              } else {
-                                const error = await response.json();
-                                alert(`Failed to delete folder: ${error.error || 'Unknown error'}`);
-                              }
                             } catch (error) {
                               console.error("Error deleting folder:", error);
                               alert("Failed to delete folder. Please try again.");
@@ -303,10 +262,7 @@ function HomeContent() {
                         <button
                           onClick={async () => {
                             try {
-                              const response = await fetch(
-                                `${apiUrl}/api/download?key=${encodeURIComponent(file.FullKey)}&disposition=attachment&filename=${encodeURIComponent(file.Key.split('/').pop() || 'download')}`
-                              );
-                              const { url } = await response.json();
+                              const url = await getDownloadUrl(file.FullKey, file.Key.split('/').pop() || 'download');
                               
                               const link = document.createElement('a');
                               link.href = url;
@@ -332,23 +288,9 @@ function HomeContent() {
                           onClick={async () => {
                             if (confirm(`Are you sure you want to delete "${file.Key.split('/').pop()}"?`)) {
                               try {
-                                const response = await fetch(
-                                  `${apiUrl}/api/delete?key=${encodeURIComponent(file.FullKey)}`,
-                                  { method: 'DELETE' }
-                                );
-                                
-                                if (response.ok) {
-                                  const listResponse = await fetch(
-                                    prefix
-                                      ? `${apiUrl}/api/objects?prefix=${encodeURIComponent(prefix)}`
-                                      : `${apiUrl}/api/objects`
-                                  );
-                                  const newData = await listResponse.json();
-                                  setData(newData);
-                                } else {
-                                  const error = await response.json();
-                                  alert(`Failed to delete file: ${error.error || 'Unknown error'}`);
-                                }
+                                await svcDeleteObject(file.FullKey);
+                                const newData = await listObjects(prefix);
+                                setData(newData);
                               } catch (error) {
                                 console.error("Error deleting file:", error);
                                 alert("Failed to delete file. Please try again.");
@@ -369,7 +311,6 @@ function HomeContent() {
               </ul>
             </CardContent>
           </Card>
-        </div>
       </div>
 
       {/* Guest Message */}

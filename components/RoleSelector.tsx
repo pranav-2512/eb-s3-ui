@@ -36,8 +36,8 @@ export default function RoleSelector({ onRoleSelect }: RoleSelectorProps) {
                 Welcome as Guest!
               </h2>
               <p className="text-slate-600 dark:text-slate-300">
-                We've kept you as a guest. Please enjoy your time and explore the project.
-                You can view files but won't be able to download, upload, or create folders.
+                We&apos;ve kept you as a guest. Please enjoy your time and explore the project.
+                You can view files but won&apos;t be able to download, upload, or create folders.
               </p>
             </div>
             <div className="animate-pulse">
@@ -58,7 +58,7 @@ export default function RoleSelector({ onRoleSelect }: RoleSelectorProps) {
               Choose Your Access Level
             </h2>
             <p className="text-slate-600 dark:text-slate-300">
-              Select how you'd like to access EB Cloud Storage
+              Select how you&apos;d like to access EB Cloud Storage
             </p>
           </div>
 

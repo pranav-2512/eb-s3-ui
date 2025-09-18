@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { User2, ShieldCheck, Eye, LogIn } from 'lucide-react';
 import { useRole } from '@/contexts/RoleContext';
@@ -182,7 +183,7 @@ export default function WelcomeScreen() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-100 to-pink-100 dark:from-[#0a1020] dark:via-[#181c2f] dark:to-[#2a1a3a] p-2">
         <div className="w-full max-w-xs rounded-xl shadow-xl bg-white/95 dark:bg-[#181c2f]/95 px-4 py-8 flex flex-col gap-4">
           <div className="flex flex-col items-center mb-2">
-            <img src="/eb_logo.png" alt="EB Logo" width={40} height={40} className="rounded-xl mb-2" />
+            <Image src="/Eb_Logo.png" alt="EB Logo" width={40} height={40} className="rounded-xl mb-2" />
             <User2 className="w-8 h-8 text-green-600 dark:text-green-400 mb-2" />
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-1">
               User Login
@@ -226,7 +227,7 @@ export default function WelcomeScreen() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-100 to-pink-100 dark:from-[#0a1020] dark:via-[#181c2f] dark:to-[#2a1a3a] p-2">
         <div className="w-full max-w-xs rounded-xl shadow-xl bg-white/95 dark:bg-[#181c2f]/95 px-4 py-8 flex flex-col gap-4">
           <div className="flex flex-col items-center mb-2">
-            <img src="/eb_logo.png" alt="EB Logo" width={40} height={40} className="rounded-xl mb-2" />
+            <Image src="/Eb_Logo.png" alt="EB Logo" width={40} height={40} className="rounded-xl mb-2" />
             <ShieldCheck className="w-8 h-8 text-purple-600 dark:text-purple-400 mb-2" />
             <h2 className="text-lg font-bold text-slate-800 dark:text-white mb-1">
               Admin Login

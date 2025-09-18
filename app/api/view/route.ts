@@ -28,9 +28,12 @@ export async function GET(request: NextRequest) {
     const contentType = response.ContentType || 'application/octet-stream';
     
     // Convert the stream to buffer
-    const chunks = [];
+    const chunks: Buffer[] = [];
     for await (const chunk of response.Body as NodeJS.ReadableStream) {
-      chunks.push(chunk);
+      const buf = Buffer.isBuffer(chunk)
+        ? chunk
+        : Buffer.from((chunk as unknown) as Uint8Array | string);
+      chunks.push(buf);
     }
     const buffer = Buffer.concat(chunks);
 
